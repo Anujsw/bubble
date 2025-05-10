@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Bubble Sort (5 Blocks)</title>
+    <script src="https://aframe.io/releases/1.3.0/aframe.min.js"></script>
+  </head>
+  <body>
+    <h2 style="text-align:center;">🔁 Bubble Sort - JavaScript + A-Frame (5 Blocks)</h2>
+    <div style="text-align:center;">
+      <button onclick="startSort()">▶ Start Sort</button>
+    </div>
+
+    <a-scene>
+      <a-entity camera position="0 1.6 8"></a-entity>
+      <a-entity light="type: ambient; intensity: 1"></a-entity>
+
+      <!-- Ground -->
+      <a-plane rotation="-90 0 0" width="20" height="10" color="#7BC8A4"></a-plane>
+
+      <!-- Boxes with values -->
+      <a-box id="box0" position="-4 1 -3" color="red" width="1" height="1" depth="1">
+        <a-text value="5" position="0 0.75 0.6" align="center" color="white"></a-text>
+      </a-box>
+
+      <a-box id="box1" position="-2 1 -3" color="blue" width="1" height="1" depth="1">
+        <a-text value="2" position="0 0.75 0.6" align="center" color="white"></a-text>
+      </a-box>
+
+      <a-box id="box2" position="0 1 -3" color="green" width="1" height="1" depth="1">
+        <a-text value="4" position="0 0.75 0.6" align="center" color="white"></a-text>
+      </a-box>
+
+      <a-box id="box3" position="2 1 -3" color="orange" width="1" height="1" depth="1">
+        <a-text value="1" position="0 0.75 0.6" align="center" color="white"></a-text>
+      </a-box>
+
+      <a-box id="box4" position="4 1 -3" color="purple" width="1" height="1" depth="1">
+        <a-text value="3" position="0 0.75 0.6" align="center" color="white"></a-text>
+      </a-box>
+    </a-scene>
+
+    <script>
+      const values = [5, 2, 4, 1, 3];
+      const positions = [-4, -2, 0, 2, 4];
+      const boxes = values.map((_, i) => document.getElementById(`box${i}`));
+
+      function swap(i, j) {
+        // swap values
+        [values[i], values[j]] = [values[j], values[i]];
+        // swap animation
+        boxes[i].setAttribute("animation", `property: position; to: ${positions[j]} 1 -3; dur: 1000`);
+        boxes[j].setAttribute("animation", `property: position; to: ${positions[i]} 1 -3; dur: 1000`);
+        // swap box references
+        [boxes[i], boxes[j]] = [boxes[j], boxes[i]];
+      }
+
+      function startSort() {
+        let n = values.length;
+        let delay = 0;
+        for (let i = 0; i < n; i++) {
+          for (let j = 0; j < n - i - 1; j++) {
+            if (values[j] > values[j + 1]) {
+              setTimeout(() => {
+                swap(j, j + 1);
+              }, delay);
+              delay += 1200; // 1.2 sec between steps
+            }
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
